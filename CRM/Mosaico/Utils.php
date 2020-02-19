@@ -314,7 +314,11 @@ class CRM_Mosaico_Utils {
             throw new \Exception("Failed to locate source file: " . $path_parts["basename"]);
           }
           if (!file_exists($cache_file)) {
-            Civi::service('mosaico_graphics')->$func($src_file, $cache_file, $width, $height);
+            // Civi::service('mosaico_graphics')->$func($src_file, $cache_file, $width, $height);
+
+            // Experimental work to keep original quality of images. Use at your own risk.
+            // Bypass manipulation & rely on browser/html to display resized image based on attributes set by template.
+            copy($src_file, $cache_file);
           }
           self::sendImage($cache_file);
           break;
